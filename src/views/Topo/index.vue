@@ -66,9 +66,11 @@ export default {
             link: null, // 连线
             currentNode: {}, // 当前节点
             currentLink: {}, //当前连线
+
             showInput: false,
             inputNode: {
-                propValue: "文本",
+                text: "文本",
+                nodeId: "",
             },
             inputTextPosition: {
                 top: 0,
@@ -157,8 +159,14 @@ export default {
         setInputPosition() {
             return `left:${this.inputTextPosition.left}px;top: ${this.inputTextPosition.top}px;`;
         },
-        inputBlur(value) {
-            if (value) {
+        inputBlur(node, value) {
+            if (node.nodeId) {
+                let textNode = this.scene.findElements((e) => {
+                    return e.nodeId == node.nodeId;
+                });
+                textNode[0].visible = true;
+                textNode[0].text = value;
+            } else {
                 this.addTextNode(this.inputTextPosition, value);
             }
             this.showInput = false;
@@ -167,13 +175,18 @@ export default {
             let textNode = new JTopo.TextNode(value);
             textNode.setLocation(location.left, location.top);
             textNode.fontColor = "123,222,234";
+            textNode.left = location.left;
+            textNode.top = location.top;
             textNode.nodeType = "Text";
+            textNode.nodeId = generateUUID();
             this.scene.add(textNode);
             textNode.dbclick((e) => {
-                this.scene.remove(textNode);
+                textNode.visible = false;
+                this.inputNode.nodeId = e.target.nodeId;
                 this.showInput = true;
-                this.inputTextPosition.left = e.offsetX;
-                this.inputTextPosition.top = e.offsetY;
+                this.inputNode.text = e.target.text;
+                this.inputTextPosition.left = e.target.x;
+                this.inputTextPosition.top = e.target.y;
             });
         },
         handleDragText(e) {
@@ -186,6 +199,7 @@ export default {
             let nodeData = JSON.parse(e.dataTransfer.getData("text"));
             if (nodeData.type == "Text") {
                 this.showInput = true;
+                this.inputNode.text = "文本";
                 this.inputTextPosition = {
                     left: e.offsetX,
                     top: e.offsetY,
