@@ -79,8 +79,6 @@ export default {
     canvas.height = Math.floor(center.offsetHeight - 10);
     this.stage = new JTopo.Stage(canvas); // 创建一个舞台对象
     this.scene = new JTopo.Scene(this.stage); // 创建一个场景对象
-    this.scene.translateX = 0;
-    this.scene.translateY = 0;
     this.lineStart = new JTopo.Node();
     this.lineStart.setSize(1, 1);
     this.lineEnd = new JTopo.Node();
