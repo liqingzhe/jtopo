@@ -27,6 +27,8 @@ canvas {
 }
 body {
     overflow: hidden;
+    font-size: 12px;
+    color: '#ccc';
 }
 li {
     list-style: none;
@@ -34,13 +36,8 @@ li {
 #app {
     overflow: hidden;
 }
-.el-tabs {
-    height: 100%;
-}
-.el-tabs__content {
-    height: calc(100% - 55px);
-    overflow: auto;
-}
-.el-tabs__nav-scroll {
-    padding-left: 20px;
+.el-button {
+    padding: 5px 10px;
+    margin: 10px;
+    background-color: blue;
 }

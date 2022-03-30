@@ -76,10 +76,10 @@ export default {
     },
 
     handleBlur(e) {
-      debugger;
-      this.node.propValue = e.target.innerHTML || "&nbsp;";
+      this.node.propValue = e.target.innerText || "&nbsp;";
       this.canEdit = false;
-      this.$emit("handleBlur", e.target.innerHTML);
+      console.log(e)
+      this.$emit("handleBlur", e.target.innerText);
     },
 
     setEdit() {
